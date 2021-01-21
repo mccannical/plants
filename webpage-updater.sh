@@ -1,19 +1,20 @@
 #!/bin/bash
-echo Gather secrets
+wall Gather secrets
 source /home/pi/plants/secrets
-echo move home
+wall move home
 cd /home/pi/plants || end
+wall getting fresh code
 git pull
 
 
-echo updating index.html...
+wall updating index.html...
 s3cmd put index.html s3://picam-garden-jesse/index.html
 s3cmd setacl --acl-public --recursive s3://picam-garden-jesse/index.html
-echo "website http://picam-garden-jesse.s3-website.us-east-2.amazonaws.com/"
+wall website http://picam-garden-jesse.s3-website.us-east-2.amazonaws.com/
 mkdir timelapse 
 counter=1000
 while true; do
-        echo taking picture ${counter}
+        wall taking picture ${counter}
         ((counter=counter+1))
         raspistill -w 1024 -h 768 -o raw.jpg
         cp raw.jpg "timelapse/image-${counter}.jpg"
