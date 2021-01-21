@@ -1,6 +1,6 @@
 #!/bin/bash
 echo Gather secrets
-source /home/pi/secrets
+source /home/pi/plants/secrets
 echo move home
 cd /home/pi/plants || end
 
