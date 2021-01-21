@@ -1,15 +1,17 @@
 #!/bin/bash
+
 wall Gather secrets
 source /home/pi/plants/secrets
+
 wall move home
 cd /home/pi/plants || end
 wall getting fresh code
 git pull
 
-
 wall updating index.html...
 s3cmd put index.html s3://picam-garden-jesse/index.html
 s3cmd setacl --acl-public --recursive s3://picam-garden-jesse/index.html
+
 wall website http://picam-garden-jesse.s3-website.us-east-2.amazonaws.com/
 mkdir timelapse 
 counter=1000
