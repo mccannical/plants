@@ -1,4 +1,5 @@
 #!/bin/bash
+sleep_time=30
 
 wall Gather secrets.
 source /home/pi/plants/secrets
@@ -17,13 +18,13 @@ mkdir timelapse
 counter=1000
 while true; do
         wall taking picture ${counter}
-        ((counter=counter+1))
         raspistill -w 1024 -h 768 -o raw.jpg
         cp raw.jpg "timelapse/image-${counter}.jpg"
         convert raw.jpg -pointsize 74 -fill white -annotate +100+100 "$(date +"%a %r")"  plants.jpg
         s3cmd put plants.jpg s3://picam-garden-jesse/img/plants.jpg
         s3cmd setacl --acl-public --recursive s3://picam-garden-jesse/img
         rm raw.jpg plants.jpg
-        sleep 1
+        sleep ${sleep_time}
+        ((counter=counter+1))
 done
 
