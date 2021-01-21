@@ -3,6 +3,7 @@ echo Gather secrets
 source /home/pi/plants/secrets
 echo move home
 cd /home/pi/plants || end
+git pull
 
 
 echo updating index.html...
