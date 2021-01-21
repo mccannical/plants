@@ -6,8 +6,7 @@ source /home/pi/plants/secrets
 
 wall -n move home
 cd /home/pi/plants || end
-wall -n getting fresh code
-git pull
+
 
 wall -n updating index.html...
 s3cmd put index.html s3://picam-garden-jesse/index.html
