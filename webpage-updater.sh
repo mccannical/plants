@@ -1,6 +1,6 @@
 #!/bin/bash
 
-wall Gather secrets
+wall Gather secrets.
 source /home/pi/plants/secrets
 
 wall move home
