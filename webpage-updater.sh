@@ -18,7 +18,7 @@ while true; do
         wall -n Picture ${counter}. 
         raspistill -w 1024 -h 768 -o raw.jpg
         cp raw.jpg "timelapse/image-${counter}.jpg"
-        convert raw.jpg -pointsize 32 -fill white -annotate +200+200 "$(date +"%a %r")"  plants.jpg
+        convert raw.jpg -pointsize 32 -fill white -annotate +200+160 "$(date +"%a %r")"  plants.jpg
         s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
         rm raw.jpg plants.jpg
         wall -n Sleeping ${sleep_time}s
