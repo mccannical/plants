@@ -7,6 +7,7 @@ curl -X POST -H 'Content-type: application/json' --data '{"text":"Starting webpa
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Updating index.html: http://picam-garden-jesse.s3-website.us-east-2.amazonaws.com/"}' ${slack}
 s3cmd put --acl-public index.html s3://picam-garden-jesse/index.html
 
+rm -rf timelapse
 mkdir timelapse 
 counter=1000
 while true; do
