@@ -1,2 +1,2 @@
-@reboot sleep 30 && cd /home/pi/plants/ && sudo git pull && ./webpage-updater.sh
+0 6 * * *  sleep 30 && cd /home/pi/plants/ && sudo git pull && ./webpage-updater.sh
 0 22 * * * /home/pi/plants/timelapse.sh
