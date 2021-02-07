@@ -11,7 +11,7 @@ rm -rf timelapse
 mkdir timelapse 
 counter=1000
 while true; do
-        raspistill -w 1024 -h 768 -o raw.jpg
+        raspistill -rot 90 -vf -hf  -o raw.jpg
         cp raw.jpg "timelapse/image-${counter}.jpg"
         convert raw.jpg -pointsize 32 -fill white -annotate +220+160 "$(date +"%a %r")"  plants.jpg
         s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
