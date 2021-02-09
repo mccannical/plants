@@ -19,7 +19,7 @@ while true; do
         raspistill -rot 90 -vf -hf  -o raw.jpg
         brightness=$(exiftool raw.jpg | grep Brightness | awk '{printf "%d", $4}')
         echo $brightness
-        if [ "$brightness" -lt 1 ]; then
+        if [ "$brightness" -gt 1 ]; then
                 cp raw.jpg "timelapse/image-${counter}.jpg"
                 convert raw.jpg -pointsize 32 -fill white -annotate +220+160 "$(date +"%a %r")"  plants.jpg
                 s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
