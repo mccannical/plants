@@ -21,7 +21,7 @@ while true; do
         echo $brightness
         if [ "$brightness" -gt 1 ]; then
                 cp raw.jpg "timelapse/image-${counter}.jpg"
-                convert raw.jpg -pointsize 32 -fill white -annotate +300+160 "$(date +"%a %r")"  plants.jpg
+                convert raw.jpg -pointsize 32 -fill white -annotate +350+180 "$(date +"%a %r")"  plants.jpg
                 s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
                 rm raw.jpg plants.jpg
         fi
