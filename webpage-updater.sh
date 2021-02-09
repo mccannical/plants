@@ -14,12 +14,16 @@ rm -rf timelapse
 mkdir timelapse 
 counter=1000
 
+
 while true; do
         raspistill -rot 90 -vf -hf  -o raw.jpg
-        cp raw.jpg "timelapse/image-${counter}.jpg"
-        convert raw.jpg -pointsize 32 -fill white -annotate +220+160 "$(date +"%a %r")"  plants.jpg
-        s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
-        rm raw.jpg plants.jpg
+        brightness=$(exiftool raw.jpg | grep Brightness | awk '{printf "%d", $4}')
+        if [ $brightness -lt 1 ] then
+                cp raw.jpg "timelapse/image-${counter}.jpg"
+                convert raw.jpg -pointsize 32 -fill white -annotate +220+160 "$(date +"%a %r")"  plants.jpg
+                s3cmd put --acl-public plants.jpg s3://picam-garden-jesse/img/plants.jpg
+                rm raw.jpg plants.jpg
+        fi
         sleep ${sleep_time}
         ((counter=counter+1))
 done
