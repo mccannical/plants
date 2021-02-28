@@ -6,6 +6,7 @@ curl -X POST -H 'Content-type: application/json' --data '{"text":"Starting webpa
 
 ipAddress=$(hostname -I)
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Garden Computer is at ip: '"${ipAddress}"'"}' "${slack}"
+mosquitto_pub -h 192.168.186.244 -t "messages" -m "Garden computer is up"
 
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Updating index.html: http://picam-garden-jesse.s3-website.us-east-2.amazonaws.com/"}' "${slack}"
 s3cmd put --acl-public index.html s3://picam-garden-jesse/index.html
@@ -13,7 +14,7 @@ s3cmd put --acl-public index.html s3://picam-garden-jesse/index.html
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Lets make sure the live stream is high res!"}' "${slack}"
 
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Kicking off collect and send to start the kafka pipeline"}' "${slack}"
-python3 /home/pi/plants/data/collect-and-send.py &
+#python3 /home/pi/plants/data/collect-and-send.py &
 
 #adjust res
 curl 'http://192.168.186.130/control?var=framesize&val=10' \
