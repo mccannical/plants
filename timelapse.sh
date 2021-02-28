@@ -1,6 +1,7 @@
 #!/bin/bash
 source /home/pi/plants/secrets
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Starting Processing of Timelapse for the day"}' ${slack}
+mosquitto_pub -h 192.168.186.244 -t "messages" -m "Starting Processing of timelapse for the day"
 
 cd /home/pi/plants/timelapse/
 ls *.jpg > stills.txt
