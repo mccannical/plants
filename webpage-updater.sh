@@ -14,7 +14,7 @@ s3cmd put --acl-public index.html s3://picam-garden-jesse/index.html
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Lets make sure the live stream is high res!"}' "${slack}"
 
 curl -X POST -H 'Content-type: application/json' --data '{"text":"Kicking off collect and send to start the kafka pipeline"}' "${slack}"
-#python3 /home/pi/plants/data/collect-and-send.py &
+python3 /home/pi/plants/data/collect-and-send.py &
 
 #adjust res
 curl 'http://192.168.186.130/control?var=framesize&val=10' \
