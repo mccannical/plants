@@ -6,26 +6,37 @@ import subprocess
 import board
 import busio
 from adafruit_htu21d import HTU21D
-from google.cloud import pubsub_v1
+import paho.mqtt.publish as publish
 
-def sendtoPS(topic_id, data):
-    project_id = "garden-304819"
-    publisher = pubsub_v1.PublisherClient()
-    topic_path = publisher.topic_path(project_id, topic_id)
 
-    # Data must be a bytestring
-    data = "{}".format(data)
-    data = data.encode("utf-8")
-    # When you publish a message, the client returns a future.
-    future = publisher.publish(topic_path, data)
+# from google.cloud import pubsub_v1
+
+# def sendtoPS(topic_id, data):
+#     project_id = "garden-304819"
+#     publisher = pubsub_v1.PublisherClient()
+#     topic_path = publisher.topic_path(project_id, topic_id)
+
+#     # Data must be a bytestring
+#     data = "{}".format(data)
+#     data = data.encode("utf-8")
+#     # When you publish a message, the client returns a future.
+#     future = publisher.publish(topic_path, data)
     
 # Create library object using our Bus I2C port
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = HTU21D(i2c)
+broker = "192.168.186.244"
+
 
 while True:
-    sendtoPS("humidity", sensor.relative_humidity)
-    sendtoPS("temp", sensor.temperature)
+    # sendtoPS("humidity", sensor.relative_humidity)
+    # sendtoPS("temp", sensor.temperature)
     bright = subprocess.run(['/home/pi/plants/data/get_bright_raw.sh'], stdout=subprocess.PIPE).stdout.decode('utf-8')
-    sendtoPS("brightness", bright)
-    print("Humidity: %0.1f \nTemperature: %0.1f C \n Brightness: %s" % sensor.relative_humidity, sensor.temperature, bright)
+    # sendtoPS("brightness", bright)
+    tempF = (sensor.temperature * 9/5 ) + 32
+    publish.single("data/temp", tempF, hostname=broker)
+    publish.single("data/humidity", sensor.relative_humidity, hostname=broker)
+    publish.single("data/bright", bright, hostname=broker)
+    
+    
+    print("Humidity: %0.1f \nTemperature: %0.1f C \n Brightness: %s" % sensor.relative_humidity, tempF, bright)
