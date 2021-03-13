@@ -71,8 +71,8 @@ curl 'http://192.168.186.130/control?var=saturation&val=1' \
 
 
 
-rm -rf timelapse
-mkdir timelapse
+#rm -rf timelapse
+#mkdir timelapse
 counter=1000
 
 
